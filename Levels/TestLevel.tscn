@@ -3,10 +3,10 @@
 [ext_resource type="PackedScene" uid="uid://cfl2yhjs48gqh" path="res://Scenes/player.tscn" id="1_aigbd"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rr2ds"]
-size = Vector3(5, 0.5, 5)
+size = Vector3(10, 0.5, 10)
 
 [sub_resource type="BoxMesh" id="BoxMesh_4r8rm"]
-size = Vector3(5, 0.5, 5)
+size = Vector3(10, 0.5, 10)
 
 [node name="Scene" type="Node3D"]
 
