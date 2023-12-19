@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://cfl2yhjs48gqh"]
+
+[ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_05jbx"]
+[ext_resource type="Script" path="res://addons/smoothing/smoothing.gd" id="2_uqbpf"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s4mt5"]
+radius = 0.4725
+height = 1.625
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_csyg0"]
+
+[node name="Player" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+script = ExtResource("1_05jbx")
+
+[node name="Smoothing" type="Node3D" parent="CharacterBody3D"]
+script = ExtResource("2_uqbpf")
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/Smoothing"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("CapsuleShape3D_s4mt5")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="CharacterBody3D/CollisionShape3D"]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_csyg0")
