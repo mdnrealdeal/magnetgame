@@ -16,6 +16,10 @@ run/main_scene="res://Levels/TestLevel.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
+[display]
+
+window/vsync/vsync_mode=2
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/smoothing/plugin.cfg")

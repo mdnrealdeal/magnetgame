@@ -1,11 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://dabswbbqrrsfi"]
+[gd_scene load_steps=6 format=3 uid="uid://dabswbbqrrsfi"]
 
 [ext_resource type="PackedScene" uid="uid://cfl2yhjs48gqh" path="res://Scenes/player.tscn" id="1_aigbd"]
+[ext_resource type="Texture2D" uid="uid://bkr824h5a68ye" path="res://Textures/prototype_textures/PNG/Dark/texture_06.png" id="1_avoru"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rr2ds"]
 size = Vector3(10, 0.5, 10)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8lggb"]
+albedo_texture = ExtResource("1_avoru")
+uv1_scale = Vector3(10, 10, 10)
+uv1_offset = Vector3(0.66, 0, 0.23)
+
 [sub_resource type="BoxMesh" id="BoxMesh_4r8rm"]
+material = SubResource("StandardMaterial3D_8lggb")
 size = Vector3(10, 0.5, 10)
 
 [node name="Scene" type="Node3D"]
