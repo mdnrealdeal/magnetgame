@@ -1,7 +1,8 @@
 extends CharacterBody3D
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
+var able_to_double_jump: bool = true
 
 # Sensitivity for mouse movement. Can change in properties.
 @export var mouse_sensitivity: float = 1
@@ -12,8 +13,6 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @export var double_jump_multiplier: float = 1.1
 @export var accel: float = 10.0
 
-var able_to_double_jump: bool = true
-
 @onready var nodeRefs: Dictionary = {
 	"head_path": $Head,
 	"camera_path": $Head/Smoothing/Camera3D
@@ -21,7 +20,7 @@ var able_to_double_jump: bool = true
 
 
 func _ready():
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	pass
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -37,32 +36,32 @@ func _physics_process(delta):
 	((this will not be removed because this is actually really useful for diagnosing Vector2 problems))
 	aidan dont mind im just rambling to myself
 	"""
+	# start
 	if Input.is_action_just_pressed("ui_left"):
 		nodeRefs["head_path"].rotation_degrees.y += 90
 	elif Input.is_action_just_pressed("ui_right"):
 		nodeRefs["head_path"].rotation_degrees.y -= 90
 	elif Input.is_action_just_pressed("ui_down"):
 		nodeRefs["head_path"].rotation_degrees.y = 0
+	# end
 
 # Handle all input events (currently handles mouse movement pls fix)
-func _unhandled_input(event):
+func _input(event):
 	if event is InputEventMouseMotion:
 		mouselook_player_controller(event)
-
 
 func move_player_controller(delta: float):
 	var input_direction: Vector2 = Input.get_vector("move_left", "move_right", "move_forward", "move_backwards")
 	var head_direction: Vector2 = input_direction.normalized().rotated(-nodeRefs["head_path"].rotation.y)
-
 	if is_on_floor():
 		velocity.x = lerp(velocity.x, head_direction.x * base_speed, accel * delta)
 		velocity.z = lerp(velocity.z, head_direction.y * base_speed, accel * delta)
 	else:
+		velocity.x = lerp(velocity.x, head_direction.x * air_strafe_speed, accel * delta)
 		velocity.z = lerp(velocity.z, head_direction.y * air_strafe_speed, accel * delta)
-		#clamp(lerp(), 0, abs(lerp())
 		pass
 	print("Velocity X is " + str(velocity.x), "\nVelocity Z is " + str(velocity.z) + "\n")
-	print(head_direction)
+	print(input_direction, " and ", head_direction)
 	move_and_slide()
 	pass
 
