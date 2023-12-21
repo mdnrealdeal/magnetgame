@@ -28,11 +28,11 @@ var current_state: int = PlayerStates.WALKING :
 }
 
 
-func _ready():
+func _ready() -> void:
 	pass
 
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -42,14 +42,14 @@ func _physics_process(delta):
 
 
 # Should handle all input events (currently handles mouse movement pls fix)
-func _input(event):
+func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		mouselook_player_controller(event)
 
 
 # Moves PlayerController with the input directions, calculates the head direction based off of it,
 # and then manipulates velocity by interpolating between the head_direction, base_speed, and accel variables.
-func move_player_controller(delta: float):
+func move_player_controller(delta: float) -> void:
 	var input_direction: Vector2 = Input.get_vector("move_left", "move_right", "move_forward", "move_backwards")
 	var head_direction: Vector2 = input_direction.normalized().rotated(-nodeRefs["head_path"].rotation.y)
 	if is_on_floor():
