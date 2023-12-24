@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://c8g75udbe77s5"]
+[gd_scene load_steps=6 format=3 uid="uid://c8g75udbe77s5"]
 
-[ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_5fiq3"]
-[ext_resource type="Script" path="res://addons/smoothing/smoothing.gd" id="2_l6edw"]
+[ext_resource type="Script" path="res://Scripts/Player/legacy_playercontroller.gd" id="1_5fiq3"]
+[ext_resource type="Script" path="res://addons/smoothing/smoothing.gd" id="2_6ydtj"]
+[ext_resource type="Script" path="res://Scripts/StateMachines/state_machine.gd" id="3_2fttc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s4mt5"]
 radius = 0.4725
@@ -11,26 +12,41 @@ height = 1.625
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_5fiq3")
-mouse_sensitivity = 0.18
+mouse_sensitivity = 0.1
 air_strafe_speed = 3.5
 jump_velocity = 4.25
 double_jump_multiplier = 1.25
 accel = 4.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionBox" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_s4mt5")
 
-[node name="Smoothing" type="Node3D" parent="CollisionShape3D"]
-script = ExtResource("2_l6edw")
+[node name="Smooth3D" type="Node3D" parent="."]
+script = ExtResource("2_6ydtj")
+flags = 3
 
-[node name="CSGMesh3D" type="CSGMesh3D" parent="CollisionShape3D/Smoothing"]
+[node name="PlayerMesh" type="CSGMesh3D" parent="Smooth3D"]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
 mesh = SubResource("CapsuleMesh_csyg0")
 
-[node name="Head" type="Node3D" parent="."]
+[node name="Head" type="Node3D" parent="Smooth3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
-[node name="Smoothing" type="Node3D" parent="Head"]
-script = ExtResource("2_l6edw")
+[node name="Camera3D" type="Camera3D" parent="Smooth3D/Head"]
+fov = 90.0
 
-[node name="Camera3D" type="Camera3D" parent="Head/Smoothing"]
+[node name="Machines" type="Node" parent="."]
+
+[node name="InteractionsMachine" type="Node" parent="Machines"]
+script = ExtResource("3_2fttc")
+
+[node name="MovementMachine" type="Node" parent="Machines"]
+script = ExtResource("3_2fttc")
+
+[node name="walking" type="Node" parent="Machines/MovementMachine"]
+
+[node name="sprinting" type="Node" parent="Machines/MovementMachine"]
+
+[node name="vaulting" type="Node" parent="Machines/MovementMachine"]
+
+[node name="crouching" type="Node" parent="Machines/MovementMachine"]

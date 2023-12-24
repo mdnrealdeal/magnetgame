@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 # States enumerator.
-enum PlayerStates {WALKING, SPRINTING, CROUCHING,}
+enum PlayerStates {WALKING, SPRINTING, CROUCHING}
 
 # Exported variables to change PlayerController attributes.
 @export var mouse_sensitivity: float = 1.0
@@ -23,8 +23,8 @@ var current_state: int = PlayerStates.WALKING :
 
 # Dictionary of references to nodes in the Editor.
 @onready var nodeRefs: Dictionary = {
-	"head_path": $Head,
-	"camera_path": $Head/Smoothing/Camera3D,
+	"head_path": $Smooth3D/Head,
+	"camera_path": $Smooth3D/Head/Camera3D,
 }
 
 
@@ -38,7 +38,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y -= gravity * delta
 	move_player_controller(delta)
 	jump_handler()
-	_debug_functions()
+	#_debug_functions()
 
 
 # Should handle all input events (currently handles mouse movement pls fix)
@@ -59,16 +59,16 @@ func move_player_controller(delta: float) -> void:
 		velocity.x = lerp(velocity.x, head_direction.x * air_strafe_speed, accel * delta)
 		velocity.z = lerp(velocity.z, head_direction.y * air_strafe_speed, accel * delta)
 		pass
-	print("Velocity X is " + str(velocity.x), "\nVelocity Z is " + str(velocity.z) + "\n")
-	print(input_direction, " and ", head_direction)
+	#print("Velocity X is " + str(velocity.x), "\nVelocity Z is " + str(velocity.z) + "\n")
+	#print(input_direction, " and ", head_direction)
 	move_and_slide()
 	pass
 
 
 # We move head_path instead of camera, so camera can have it's own individual rotations and animations.
 func mouselook_player_controller(event: InputEventMouseMotion) -> void:
-	nodeRefs["head_path"].rotation_degrees.x += (-event.relative.y * mouse_sensitivity)
-	nodeRefs["head_path"].rotation_degrees.y += (-event.relative.x * mouse_sensitivity)
+	nodeRefs["head_path"].rotation_degrees.x -= (event.relative.y * mouse_sensitivity)
+	nodeRefs["head_path"].rotation_degrees.y -= (event.relative.x * mouse_sensitivity)
 
 
 # Handles double jump by checking mid air if Player can double jump.

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://c8g75udbe77s5" path="res://Objects/player.tscn" id="1_aigbd"]
 [ext_resource type="Texture2D" uid="uid://bkr824h5a68ye" path="res://Textures/prototype_textures/PNG/Dark/texture_06.png" id="1_avoru"]
-[ext_resource type="Script" path="res://Scripts/SceneScript.gd" id="1_mpycu"]
+[ext_resource type="Script" path="res://Scripts/Scenes/SceneScript.gd" id="1_mpycu"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rr2ds"]
 size = Vector3(10, 0.5, 10)
